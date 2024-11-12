@@ -24,7 +24,7 @@ public class RestController {
 
     @PostMapping({"/products"})
     public ResponseEntity<?> create(@RequestBody Products products) {
-        if (products.getProductName().length() + 1 < 255 && !products.getProductName().isEmpty() && products.getProductDescription().length() < 4096) {
+        if (products.getProductName().length() < 255 && !products.getProductName().isEmpty() && products.getProductDescription().length() < 4096) {
             this.productService.create(products);
             return new ResponseEntity<>(HttpStatus.CREATED);
         } else {
@@ -49,6 +49,7 @@ public class RestController {
         boolean update = this.productService.update(products, id);
         return update ? new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
 
     @DeleteMapping({"/products/{id}"})
     public ResponseEntity<?> delete(@PathVariable(name = "id") int id) {

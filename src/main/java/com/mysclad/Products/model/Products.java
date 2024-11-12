@@ -11,15 +11,15 @@ import jakarta.persistence.*;
 public class Products {
     @Id
     @Column(name = "id")
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(name = "productname")
-    private String productName;
-    @Column(name = "productdescription")
+    @Column(name = "product_name")
+    private String product_name;
+    @Column(name = "product_description")
     private String productDescription;
-    @Column(name = "productprice")
+    @Column(name = "product_price")
     private Integer productPrice;
-    @Column(name = "productstock")
+    @Column(name = "product_stock")
     private String productStock;
 
     public Integer getId() {
@@ -31,11 +31,11 @@ public class Products {
     }
 
     public String getProductName() {
-        return this.productName;
+        return this.product_name;
     }
 
     public void setProductName(String productName) {
-        this.productName = productName;
+        this.product_name = productName;
     }
 
     public String getProductDescription() {

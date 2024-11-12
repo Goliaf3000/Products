@@ -2,8 +2,10 @@ package com.mysclad.Products.service;
 
 import com.mysclad.Products.model.Products;
 import java.util.List;
+import java.util.Optional;
 
 import com.mysclad.Products.repository.ProductsRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,10 +39,18 @@ public class ProductServiceClass implements ProductService {
         return productsRepository.getReferenceById(id);
     }
 
-    public boolean update(Products product, int id) {
-        if (productsRepository.existsById(id)){
-            product.setId(id);
-            productsRepository.save(product);
+    @Transactional
+    public boolean update(Products newProductData, int id) {
+        Optional<Products> existingProductOptional = productsRepository.findById(id);
+        if (existingProductOptional.isPresent()) {
+            Products existingProduct = existingProductOptional.get();
+
+            existingProduct.setProductName(newProductData.getProductName());
+            existingProduct.setProductDescription(newProductData.getProductDescription());
+            existingProduct.setProductPrice(newProductData.getProductPrice());
+            existingProduct.setProductStock(newProductData.getProductStock());
+
+            productsRepository.saveAndFlush(existingProduct);
             return true;
         }
         return false;

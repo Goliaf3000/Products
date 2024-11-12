@@ -1,8 +1,7 @@
-CREATE TABLE IF NOT EXISTS products
-(
-    id   BIGSERIAL PRIMARY KEY ,
-    productName  VARCHAR(260) NOT NULL ,
-    productDescription VARCHAR(4099) NOT NULL ,
-    productPrice INTEGER NOT NULL ,
-    productStock VARCHAR(254) NOT NULL
+CREATE TABLE IF NOT EXISTS products (
+    id BIGSERIAL PRIMARY KEY,
+    product_name VARCHAR(260) NOT NULL,
+    product_description VARCHAR(4099) ,
+    product_price INTEGER ,
+    product_stock VARCHAR(254)
     );
