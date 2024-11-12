@@ -1,23 +1,23 @@
 package com.mysclad.Products.service;
 
 import com.mysclad.Products.model.Products;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
+
+import com.mysclad.Products.repository.ProductsRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ProductServiceClass implements ProductService {
-    private static final Map<Integer, Products> PRODUCTS_MAP = new HashMap();
-    private static final AtomicInteger ID_PRODUCT = new AtomicInteger();
 
-    public ProductServiceClass() {
+    private final ProductsRepository productsRepository;
+
+    public ProductServiceClass(ProductsRepository productsRepository) {
+        this.productsRepository = productsRepository;
     }
 
+    @Override
     public void create(Products product) {
-        int id = ID_PRODUCT.incrementAndGet();
         if (product.getProductPrice() == null || product.getProductPrice() < 0) {
             product.setProductPrice(0);
         }
@@ -26,29 +26,31 @@ public class ProductServiceClass implements ProductService {
             product.setProductStock("не в наличии");
         }
 
-        product.setId(id);
-        PRODUCTS_MAP.put(id, product);
+        productsRepository.save(product);
     }
-
+    @Override
     public List<Products> readAll() {
-        return new ArrayList(PRODUCTS_MAP.values());
+        return productsRepository.findAll();
     }
 
     public Products read(int id) {
-        return (Products)PRODUCTS_MAP.get(id);
+        return productsRepository.getReferenceById(id);
     }
 
     public boolean update(Products product, int id) {
-        if (PRODUCTS_MAP.containsKey(id)) {
+        if (productsRepository.existsById(id)){
             product.setId(id);
-            PRODUCTS_MAP.put(id, product);
+            productsRepository.save(product);
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
-
+    @Override
     public boolean delete(int id) {
-        return PRODUCTS_MAP.remove(id) != null;
+        if (productsRepository.existsById(id)){
+            productsRepository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 }

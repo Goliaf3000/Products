@@ -24,35 +24,35 @@ public class RestController {
 
     @PostMapping({"/products"})
     public ResponseEntity<?> create(@RequestBody Products products) {
-        if (products.getProductName().length() < 255 && !products.getProductName().isEmpty() && products.getProductDescription().length() < 4096) {
+        if (products.getProductName().length() + 1 < 255 && !products.getProductName().isEmpty() && products.getProductDescription().length() < 4096) {
             this.productService.create(products);
-            return new ResponseEntity(HttpStatus.CREATED);
+            return new ResponseEntity<>(HttpStatus.CREATED);
         } else {
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
     @GetMapping({"/products"})
-    public ResponseEntity<List<Products>> readAll() {
+    public ResponseEntity<?> readAll() {
         List<Products> products = this.productService.readAll();
-        return products != null && !products.isEmpty() ? new ResponseEntity(products, HttpStatus.OK) : new ResponseEntity(HttpStatus.NOT_FOUND);
+        return products != null && !products.isEmpty() ? new ResponseEntity<>(products, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @GetMapping({"/products/{id}"})
     public ResponseEntity<Products> read(@PathVariable(name = "id") int id) {
         Products products = this.productService.read(id);
-        return products != null ? new ResponseEntity(products, HttpStatus.OK) : new ResponseEntity(HttpStatus.NOT_FOUND);
+        return products != null ? new ResponseEntity<>(products, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PutMapping({"/products/{id}"})
     public ResponseEntity<?> update(@PathVariable(name = "id") int id, @RequestBody Products products) {
         boolean update = this.productService.update(products, id);
-        return update ? new ResponseEntity(HttpStatus.OK) : new ResponseEntity(HttpStatus.NOT_FOUND);
+        return update ? new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @DeleteMapping({"/products/{id}"})
     public ResponseEntity<?> delete(@PathVariable(name = "id") int id) {
         boolean deleted = this.productService.delete(id);
-        return deleted ? new ResponseEntity(HttpStatus.OK) : new ResponseEntity(HttpStatus.NOT_FOUND);
+        return deleted ? new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }

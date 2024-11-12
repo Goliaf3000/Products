@@ -1,15 +1,26 @@
 
 package com.mysclad.Products.model;
 
-public class Products {
-    private Integer id;
-    private String productName;
-    private String productDescription;
-    private Integer productPrice;
-    private String productStock;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.*;
+@Table(name = "products")
+@Entity
 
-    public Products() {
-    }
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+
+public class Products {
+    @Id
+    @Column(name = "id")
+    @GeneratedValue
+    private Integer id;
+    @Column(name = "productname")
+    private String productName;
+    @Column(name = "productdescription")
+    private String productDescription;
+    @Column(name = "productprice")
+    private Integer productPrice;
+    @Column(name = "productstock")
+    private String productStock;
 
     public Integer getId() {
         return this.id;
