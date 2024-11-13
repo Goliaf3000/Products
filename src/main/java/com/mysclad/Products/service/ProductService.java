@@ -1,12 +1,15 @@
 package com.mysclad.Products.service;
 
 import com.mysclad.Products.model.Products;
-import java.util.List;
+import com.mysclad.Products.repository.ProductsRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 
-public interface ProductService {
+public interface ProductService  {
     void create(Products product);
 
-    List<Products> readAll();
+    Page<Products> findAll(Specification<Products> specification, Pageable pageable);
 
     Products read(int id);
 

@@ -13,13 +13,13 @@ public class Products {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(name = "product_name")
-    private String product_name;
-    @Column(name = "product_description")
+    @Column(name = "productName")
+    private String productName;
+    @Column(name = "productDescription")
     private String productDescription;
-    @Column(name = "product_price")
+    @Column(name = "productPrice")
     private Integer productPrice;
-    @Column(name = "product_stock")
+    @Column(name = "productStock")
     private String productStock;
 
     public Integer getId() {
@@ -31,11 +31,11 @@ public class Products {
     }
 
     public String getProductName() {
-        return this.product_name;
+        return this.productName;
     }
 
     public void setProductName(String productName) {
-        this.product_name = productName;
+        this.productName = productName;
     }
 
     public String getProductDescription() {
