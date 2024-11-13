@@ -14,7 +14,7 @@ services:
       - network
 
   app:
-    image: your-docker-image-name
+    image: spring_rest_api_project
     container_name: spring-boot-app
     build:
       context: .
